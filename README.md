@@ -2,7 +2,7 @@
 
 `swift-export` is a command-line tool used to generate signed and notarized installer packages for macOS. The generated installer packages can contain any executable file (built from a Swift Package Manager project) and optional payloads, such as LaunchDaemons plist files. It runs on macOS 13 and above.
 
-You can download the installer here: [swift-export.pkg](swift-export.pkg), or build the tool from source.
+You can download the installer here: [swift-export.pkg](https://raw.githubusercontent.com/franklefebvre/swift-export/main/swift-export.pkg), or build the tool from source.
 
 ## Basic Usage
 
