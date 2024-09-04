@@ -1,0 +1,4 @@
+executable:
+  identifier: com.franklefebvre.swift-export
+package:
+  version: 1.0
