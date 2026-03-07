@@ -46,7 +46,7 @@ then the command can be reduced to `swift export`.
 
 ### Sandboxing and entitlements
 
-By default the executable is built with the hardened runtime enabled, without sandboxing. For other situations (e.g. to enable sandboxing or to give additional entitlements), it is possible to provide an entitlements file. It should be named "hardened.entitlements" in the same directory as the `export.yml` file, or its path can be specified in the config file.
+By default the built executable has sandboxing disabled. If a more restrictive envitonment is needed, a custom entitlements file can be provided. It should be named "hardened.entitlements" in the same directory as the `export.yml` file to be used automatically, or its path can be specified in the config file.
 
 ### Installation destination
 

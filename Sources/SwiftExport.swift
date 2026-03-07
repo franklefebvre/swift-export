@@ -157,22 +157,13 @@ struct SwiftExport: AsyncParsableCommand {
             }
         }
         
-        let entitlementsFile: URL
-        if let configEntitlementsFile = config.entitlementsFile {
-            entitlementsFile = configEntitlementsFile
-        } else {
-            entitlementsFile = URL.temporaryDirectory.appending(component: "entitlements", directoryHint: .notDirectory)
-            if !dryRun {
-                await logger.info("Creating default entitlements")
-                let defaultEntitlements = ["com.apple.security.app-sandbox": false]
-                let entitlementsData = try PropertyListEncoder().encode(defaultEntitlements)
-                try entitlementsData.write(to: entitlementsFile)
-            }
-        }
-        
         await logger.info("Signing executable")
         // target = .build/release/target_name
-        try await shell(.codesign, "--force", "--entitlements", entitlementsFile.filePath, "--options", "runtime", "--sign", config.exportConfig.executable.certificate, "--identifier=\"\(codesignIdentifier)\"", executablePath)
+        if let entitlementsPath = config.entitlementsFile?.path {
+            try await shell(.codesign, "--force", "--entitlements", entitlementsPath, "--options", "runtime", "--sign", config.exportConfig.executable.certificate, "--identifier=\"\(codesignIdentifier)\"", executablePath)
+        } else {
+            try await shell(.codesign, "--force", "--options", "runtime", "--sign", config.exportConfig.executable.certificate, "--identifier=\"\(codesignIdentifier)\"", executablePath)
+        }
         try await shell(.codesign, "--verify", "--verbose", executablePath)
 
         if !dryRun {
@@ -193,9 +184,6 @@ struct SwiftExport: AsyncParsableCommand {
         
         if !dryRun {
             await logger.info("Deleting temporary files")
-            if config.entitlementsFile == nil {
-                try? FileManager.default.removeItem(at: entitlementsFile)
-            }
             try? FileManager.default.removeItem(at: installDirectory)
         }
         
