@@ -1,4 +1,11 @@
+# Use `swift export` to generate an installer package: https://github.com/franklefebvre/swift-export
+
+# Certificate and notary information is expected in these environment variables:
+# - SWIFT_EXPORT_EXECUTABLE_CERTIFICATE
+# - SWIFT_EXPORT_PACKAGE_CERTIFICATE
+# - SWIFT_EXPORT_NOTARY_PROFILE
+
 executable:
   identifier: com.franklefebvre.swift-export
 package:
-  version: 1.0
+  version: 1.0.1
